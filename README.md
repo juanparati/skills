@@ -1,6 +1,6 @@
 # Skills
 
-A collection of [Claude skills](https://docs.claude.com/en/docs/claude-code/skills) by Juan Lago.
+A collection of [Claude skills](https://docs.claude.com/en/docs/claude-code/skills).
 
 ## Install
 
