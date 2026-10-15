@@ -1,0 +1,12 @@
+# Dev-only skills installed via `npx skills` (not part of this repo's published skills)
+.claude/skills/
+skills-lock.json
+
+.DS_Store
+
+# skill-creator eval workspaces
+*-workspace/
+
+# Python bytecode
+__pycache__/
+*.py[cod]
