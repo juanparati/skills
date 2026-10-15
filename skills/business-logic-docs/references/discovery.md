@@ -74,11 +74,11 @@ Use commit messages as **evidence for intent**, then confirm against the current
 
 ## 5. When you can't tell
 
-Write what the code does, and add:
+Write what the code does, and add an **Unclear** callout (GitHub syntax shown; Obsidian uses `> [!question] Unclear`, see `formats.md`):
 
 ```markdown
-> [!question] Unclear
-> The code skips leads from `source = 7`, but nothing explains why. *Ask the team: which source is 7, and why is it excluded?*
+> [!IMPORTANT]
+> **Unclear:** the code skips leads from `source = 7`, but nothing explains why. *Ask the team: which source is 7, and why is it excluded?*
 ```
 
 These questions are valuable output — list them in the final report.

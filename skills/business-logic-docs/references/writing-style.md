@@ -6,13 +6,15 @@ The readers want to understand the business, and some of them have mild ADHD. A 
 
 **Focused, not condensed.** Each note covers **one** topic. Inside that note, explain it fully, with space to breathe. If a note grows too long, split it into two linked notes. Don't squeeze it.
 
+The examples below use GitHub syntax (the default). For the Obsidian equivalent of each link and callout, see `formats.md`.
+
 ---
 
 ## The rules
 
 ### 1. Start with a TL;DR
 
-Every note opens with a `> [!tldr] TL;DR` callout: 2–3 short lines saying what this is and why it matters. Someone who reads only this should still learn something true.
+Every note opens with a **TL;DR callout**: 2–3 short lines saying what this is and why it matters. Someone who reads only this should still learn something true.
 
 ### 2. Use line breaks generously
 
@@ -45,7 +47,7 @@ A rule without its reason is hard to remember. When the code, a comment or a com
 
 Say **"the lead is sold to a buyer"**, not *"`LeadProcessor::dispatch()` sets `status=SOLD`"*. Code names go in the collapsed *Where in the code* section and in the glossary aliases.
 
-When a business term first appears, link it to the glossary: `[[Lead]]`.
+When a business term first appears, link it to its glossary note: `[Lead](../Glossary/Lead.md)` (Obsidian: `[[Lead]]`).
 
 ### 8. Draw it
 
@@ -59,11 +61,13 @@ Introduce each diagram with one sentence, and keep it to roughly ≤ 12 nodes. S
 
 ### 9. Use callouts for things that matter
 
-- `> [!tip]` — useful to know
-- `> [!warning]` — surprising behavior, edge cases, things that go wrong
-- `> [!example]` — a worked example
-- `> [!question] Unclear` — something the code doesn't explain; say what's unknown
-- `> [!info]- Where in the code` — collapsed technical details (the `-` collapses it)
+- **Tip** — useful to know
+- **Warning** — surprising behavior, edge cases, things that go wrong
+- **Example** — a worked example
+- **Unclear** — something the code doesn't explain; say what's unknown
+- **Where in the code** — collapsed technical details
+
+The exact syntax of each one depends on the format: see `formats.md`.
 
 ### 10. Friendly, direct tone
 
@@ -95,13 +99,12 @@ To avoid this, a new application is **ignored** when:
 - the earlier one arrived **less than 10 minutes ago**, *and*
 - the earlier one was **not rejected**.
 
-> [!example]
-> *Ana applies at 10:02. A second application with her phone arrives at 10:07.*
+> **Example:** *Ana applies at 10:02. A second application with her phone arrives at 10:07.*
 > → The second one is **ignored** and **never sent to buyers**.
 
 **Why?** Without this, buyers would be **charged twice** for the same person.
 
-> [!tip]
+> [!TIP]
 > The 10-minute window is the default. **Each campaign can set its own window.**
 ```
 
@@ -117,3 +120,4 @@ To avoid this, a new application is **ignored** when:
 - [ ] Diagram if there's a flow or lifecycle?
 - [ ] The *why* stated (or flagged as Unclear)?
 - [ ] Code names only in *Where in the code* and glossary aliases?
+- [ ] Links and callouts in the chosen format's syntax?

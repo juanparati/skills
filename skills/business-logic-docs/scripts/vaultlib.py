@@ -1,13 +1,31 @@
-"""Shared helpers for reading an Obsidian-style business docs vault (stdlib only)."""
+"""Shared helpers for reading a business docs vault, GitHub or Obsidian flavored (stdlib only)."""
 
 from __future__ import annotations
 
+import json
 import re
 from pathlib import Path
 
 MANIFEST_NAME = ".business-docs.json"
 WIKILINK_RE = re.compile(r"(?<!!)\[\[([^\]|#^]+)(?:[#^][^\]|]*)?(?:\|[^\]]*)?\]\]")
 EMBED_RE = re.compile(r"!\[\[([^\]|#^]+)")
+# [text](target) or [text](<target>), not images; the target is captured without a "title".
+MDLINK_RE = re.compile(r"(?<!!)\[[^\]]*\]\(\s*(<[^>]*>|[^)\s]+)(?:\s+\"[^\"]*\")?\s*\)")
+FORMATS = ("gfm", "obsidian")
+ENTRY_NOTE = {"gfm": "README.md", "obsidian": "Home.md"}
+
+
+def read_format(vault: Path, override: str | None = None) -> str:
+    """The vault's Markdown flavor: the override, else the manifest's, else gfm.
+
+    Manifests written before formats existed have no `format` field; those vaults are Obsidian.
+    """
+    if override:
+        return override
+    path = vault / MANIFEST_NAME
+    if path.exists():
+        return json.loads(path.read_text(encoding="utf-8")).get("format", "obsidian")
+    return "gfm"
 
 
 def iter_notes(vault: Path):

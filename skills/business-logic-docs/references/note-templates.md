@@ -2,6 +2,10 @@
 
 One template per note type. Fill in the parts that apply; drop sections that would be empty rather than writing "N/A".
 
+The templates use **GitHub flavored Markdown** (the default format). **Writing Obsidian?** Translate each construct (links, callouts, `README.md` → `Home.md`) using `formats.md`.
+
+Links in the templates are written from the note's own folder: `../Workflows/<Workflow>.md` from a note in `Domains/`, `Workflows/<Workflow>.md` from `README.md`. Encode spaces as `%20`.
+
 Every note shares the same frontmatter shape:
 
 ```yaml
@@ -17,7 +21,7 @@ updated: YYYY-MM-DD
 
 `sources` is what update mode uses to know which notes to revisit when code changes, so list the files that really contain the logic (directories are fine for groups of files). Keep the list short and accurate.
 
-Mermaid tips (Obsidian renders mermaid, but syntax errors show as an error box):
+Mermaid tips (GitHub and Obsidian both render mermaid, but syntax errors show as an error box):
 
 - Quote labels that contain spaces or punctuation: `A["Lead arrives"] --> B{"Duplicate?"}`
 - Avoid parentheses, `#`, `;` and quotes inside unquoted labels.
@@ -25,7 +29,7 @@ Mermaid tips (Obsidian renders mermaid, but syntax errors show as an error box):
 
 ---
 
-## Home.md
+## README.md (entry note; `Home.md` in Obsidian)
 
 ```markdown
 ---
@@ -37,7 +41,8 @@ updated: YYYY-MM-DD
 
 # <App name>: how the business works
 
-> [!tldr] TL;DR
+> [!NOTE]
+> **TL;DR**
 > **<App>** <does what> for **<whom>**.
 > It makes money / creates value by <how>.
 
@@ -56,16 +61,16 @@ flowchart LR
 
 ## Business areas
 
-- [[<Domain A>]] — *one-line summary*
-- [[<Domain B>]] — *one-line summary*
+- [<Domain A>](Domains/<Domain%20A>.md) — *one-line summary*
+- [<Domain B>](Domains/<Domain%20B>.md) — *one-line summary*
 
 ## Key processes
 
-- [[<Workflow 1>]] — *one-line summary*
+- [<Workflow 1>](Workflows/<Workflow%201>.md) — *one-line summary*
 
 ## Start here if you are…
 
-- **New to the business** → read [[Glossary]] first, then [[<most central domain>]]
+- **New to the business** → read the [Glossary](Glossary.md) first, then [<most central domain>](Domains/<Domain>.md)
 - **Looking for a specific rule** → see the Rules section in each area
 
 ## Open questions
@@ -89,7 +94,8 @@ updated: YYYY-MM-DD
 
 # <Domain>
 
-> [!tldr] TL;DR
+> [!NOTE]
+> **TL;DR**
 > <What this area is responsible for, in 2–3 lines.>
 
 ## Why it exists
@@ -109,18 +115,22 @@ flowchart TD
 
 ## Processes
 
-- [[<Workflow>]] — *summary*
+- [<Workflow>](../Workflows/<Workflow>.md) — *summary*
 
 ## Things it manages
 
-- [[<Entity>]] — *summary*
+- [<Entity>](../Entities/<Entity>.md) — *summary*
 
 ## Important rules
 
-- [[<Rule>]] — *summary*
+- [<Rule>](../Rules/<Rule>.md) — *summary*
 
-> [!info]- Where in the code
-> - `app/...` — *what lives there*
+<details>
+<summary>Where in the code</summary>
+
+- `app/...` — *what lives there*
+
+</details>
 ```
 
 ---
@@ -139,10 +149,11 @@ updated: YYYY-MM-DD
 
 # <Workflow name>
 
-> [!tldr] TL;DR
+> [!NOTE]
+> **TL;DR**
 > <What starts it → what happens → the outcome.>
 
-Part of [[<Domain>]].
+Part of [<Domain>](../Domains/<Domain>.md).
 
 ## When does it start?
 
@@ -167,16 +178,20 @@ flowchart TD
 
 ## Rules applied
 
-- [[<Rule>]] — *summary*
+- [<Rule>](../Rules/<Rule>.md) — *summary*
 
-> [!example]
-> *A worked example with names and numbers.*
+> **Example:** *A worked example with names and numbers.*
 
-> [!warning] Edge cases
+> [!WARNING]
+> **Edge cases**
 > - ...
 
-> [!info]- Where in the code
-> - `app/...` — *role in this workflow*
+<details>
+<summary>Where in the code</summary>
+
+- `app/...` — *role in this workflow*
+
+</details>
 ```
 
 ---
@@ -195,10 +210,11 @@ updated: YYYY-MM-DD
 
 # <Entity>
 
-> [!tldr] TL;DR
+> [!NOTE]
+> **TL;DR**
 > <What it represents in the real world, and why it matters.>
 
-See also: [[<Glossary term>]] · [[<Domain>]]
+See also: [<Glossary term>](../Glossary/<Term>.md) · [<Domain>](../Domains/<Domain>.md)
 
 ## What it represents
 
@@ -222,15 +238,19 @@ stateDiagram-v2
 
 ## Rules
 
-- [[<Rule>]] — *summary*
+- [<Rule>](../Rules/<Rule>.md) — *summary*
 
 ## Related
 
-- **Belongs to** [[<Entity>]] · **has many** [[<Entity>]]
+- **Belongs to** [<Entity>](<Entity>.md) · **has many** [<Entity>](<Entity>.md)
 
-> [!info]- Where in the code
-> - Model: `app/Models/...`
-> - Statuses: `app/Enums/...`
+<details>
+<summary>Where in the code</summary>
+
+- Model: `app/Models/...`
+- Statuses: `app/Enums/...`
+
+</details>
 ```
 
 ---
@@ -249,7 +269,8 @@ updated: YYYY-MM-DD
 
 # <Rule name>
 
-> [!tldr] TL;DR
+> [!NOTE]
+> **TL;DR**
 > <The rule in one sentence, with its key number.>
 
 ## The rule
@@ -258,21 +279,27 @@ updated: YYYY-MM-DD
 
 ## Why it exists
 
-<The reason, from comments/commits. Otherwise a `> [!question] Unclear` callout.>
+<The reason, from comments/commits. Otherwise an Unclear callout:>
 
-> [!example]
-> *Concrete scenario.*
+> [!IMPORTANT]
+> **Unclear:** <what is unknown.>
+
+> **Example:** *Concrete scenario.*
 
 ## Where it applies
 
-- [[<Workflow>]]
+- [<Workflow>](../Workflows/<Workflow>.md)
 
 ## Can it be changed?
 
 <Config, per-customer overrides, feature flags — in business terms.>
 
-> [!info]- Where in the code
-> - `app/...` · config `...`
+<details>
+<summary>Where in the code</summary>
+
+- `app/...` · config `...`
+
+</details>
 ```
 
 ---
@@ -289,15 +316,15 @@ updated: YYYY-MM-DD
 
 # <Term>
 
-> [!tldr] TL;DR
+> [!NOTE]
+> **TL;DR**
 > **<Term>**: <one-line plain definition>.
 
 ## Meaning
 
 <2–3 short lines.>
 
-> [!example]
-> *<Example in real life.>*
+> **Example:** *<Example in real life.>*
 
 ## In the code
 
@@ -305,7 +332,7 @@ Called `<Identifier>` *(e.g. model `Lead`, table `leads`, status `SOLD`)*.
 
 ## Related
 
-- [[<Entity / Workflow / other term>]]
+- [<Entity>](../Entities/<Entity>.md) · [<Workflow>](../Workflows/<Workflow>.md) · [<Other term>](<Other%20term>.md)
 ```
 
 ---
@@ -322,12 +349,13 @@ updated: YYYY-MM-DD
 
 # Glossary
 
-> [!tldr] TL;DR
+> [!NOTE]
+> **TL;DR**
 > The words used in this business, in plain language. Start here if a term confuses you.
 
 ## A
 
-- [[<Term>]] — *one-line definition*
+- [<Term>](Glossary/<Term>.md) — *one-line definition*
 
 ## B
 

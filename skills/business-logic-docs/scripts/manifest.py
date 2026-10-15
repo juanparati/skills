@@ -2,13 +2,15 @@
 """Manage the .business-docs.json manifest of a business docs vault.
 
 Usage:
-  manifest.py write   <docs-location> --repo <repo-root>
-      Record the current HEAD commit and the note -> sources map (read from
-      each managed note's `sources` frontmatter).
+  manifest.py write   <docs-location> --repo <repo-root> [--format gfm|obsidian]
+      Record the current HEAD commit, the Markdown format (default: the one
+      already in the manifest, else gfm) and the note -> sources map (read
+      from each managed note's `sources` frontmatter).
 
   manifest.py changed <docs-location> [--repo <repo-root>] [--max-commits N]
       Compare the recorded commit with HEAD and print JSON with the affected
-      notes, changed files no note covers, deleted files and commit messages.
+      notes, changed files no note covers, deleted files, commit messages and
+      the vault's format.
 
   manifest.py show    <docs-location>
       Print the manifest.
@@ -24,7 +26,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from vaultlib import MANIFEST_NAME, as_list, iter_notes, read_note  # noqa: E402
+from vaultlib import FORMATS, MANIFEST_NAME, as_list, iter_notes, read_format, read_note  # noqa: E402
 
 IGNORED_PREFIXES = ("vendor/", "node_modules/", "public/build/", "storage/", ".git/")
 
@@ -63,8 +65,10 @@ def cmd_write(args) -> int:
     vault = args.vault
     head = git(repo, "rev-parse", "HEAD").strip()
     notes = note_sources(vault)
+    fmt = read_format(vault, args.format)
     manifest = {
         "version": 1,
+        "format": fmt,
         "repo": str(repo),
         "commit": head,
         "generated_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
@@ -72,7 +76,7 @@ def cmd_write(args) -> int:
     }
     (vault / MANIFEST_NAME).write_text(json.dumps(manifest, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     missing = sorted({s for srcs in notes.values() for s in srcs if not (repo / s).exists()})
-    print(f"wrote {vault / MANIFEST_NAME}: commit {head[:10]}, {len(notes)} notes")
+    print(f"wrote {vault / MANIFEST_NAME}: commit {head[:10]}, format {fmt}, {len(notes)} notes")
     if missing:
         print("warning: these sources don't exist in the repo (fix the notes' `sources`):")
         for s in missing:
@@ -87,7 +91,7 @@ def cmd_changed(args) -> int:
     base = manifest["commit"]
     head = git(repo, "rev-parse", "HEAD").strip()
 
-    result: dict = {"from": base, "to": head, "affected_notes": {}, "unmapped_files": [], "deleted_files": [], "commits": []}
+    result: dict = {"from": base, "to": head, "format": manifest.get("format", "obsidian"), "affected_notes": {}, "unmapped_files": [], "deleted_files": [], "commits": []}
     if base != head:
         diff = git(repo, "diff", "--name-status", f"{base}..{head}")
         notes = note_sources(vault) or manifest.get("notes", {})
@@ -124,6 +128,7 @@ def main() -> int:
     w = sub.add_parser("write")
     w.add_argument("vault", type=Path)
     w.add_argument("--repo", type=Path, required=True)
+    w.add_argument("--format", choices=FORMATS, help="Markdown flavor (default: manifest's, else gfm)")
     w.set_defaults(func=cmd_write)
 
     c = sub.add_parser("changed")

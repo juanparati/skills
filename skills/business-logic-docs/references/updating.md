@@ -9,6 +9,7 @@ Use this when the docs location contains a `.business-docs.json` manifest. The g
 ```json
 {
   "version": 1,
+  "format": "gfm",
   "repo": "/abs/path/to/repo",
   "commit": "f198b799…",
   "generated_at": "2026-10-15T10:00:00Z",
@@ -19,6 +20,8 @@ Use this when the docs location contains a `.business-docs.json` manifest. The g
 ```
 
 `notes` is built from each note's `sources` frontmatter.
+
+`format` is the Markdown flavor (`gfm` or `obsidian`, see `formats.md`). **Keep writing in that format** — don't ask the user again. A manifest without `format` comes from an older version of this skill and is `obsidian`. Convert between formats only if the user asks for it.
 
 ## Procedure
 
@@ -31,6 +34,7 @@ python3 <skill-dir>/scripts/manifest.py changed <docs-location> --repo <repo-roo
 It prints JSON with:
 
 - `from` / `to` — the analyzed commit and the current `HEAD`
+- `format` — the vault's Markdown flavor
 - `affected_notes` — notes whose `sources` were touched, with the files that changed
 - `unmapped_files` — changed files no note covers (possible **new** business logic)
 - `deleted_files` — removed files (notes may describe logic that no longer exists)
@@ -63,6 +67,6 @@ Also respect notes **without** `business-docs` in their `tags` — those are hum
 ### 4. Finish
 
 - Set `updated:` to today on every note you changed (only those).
-- Run `scripts/check_vault.py` and fix errors.
+- Run `scripts/check_vault.py` and fix errors (it reads the format from the manifest).
 - Run `scripts/manifest.py write` to record the new commit.
 - In the report, list the notes **created / updated / proposed for deletion**, with one line each on what changed.
