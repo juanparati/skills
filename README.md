@@ -23,7 +23,8 @@ npx skills add juanparati/skills
 
 | Skill | Description |
 | ----- | ----------- |
-| [business-logic-docs](skills/business-logic-docs/SKILL.md) | Reads code, comments and git history to explain an app's business logic as an interlinked Obsidian-style vault (domains, workflows, entities, rules, glossary, mermaid diagrams). Updates existing docs incrementally. |
+| [business-logic-docs](skills/business-logic-docs/SKILL.md) | Reads code, comments and git history to explain an app's business logic as interlinked GitHub- or Obsidian-flavored Markdown docs (domains, workflows, entities, rules, glossary, mermaid diagrams). Updates existing docs incrementally. |
+| [human-readme](skills/human-readme/SKILL.md) | Creates or simplifies README.md files so they're short, scannable and human-friendly (ADHD-friendly): clear structure, bold where it matters, no walls of text. |
 
 ## Repository layout
 

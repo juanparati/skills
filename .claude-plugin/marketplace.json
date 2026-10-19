@@ -1,0 +1,13 @@
+{
+  "name": "juan-skills",
+  "owner": {
+    "name": "Juan Lago"
+  },
+  "plugins": [
+    {
+      "name": "skills",
+      "source": "./",
+      "description": "A collection of Claude skills by Juan Lago."
+    }
+  ]
+}

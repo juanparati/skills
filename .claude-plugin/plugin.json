@@ -1,0 +1,10 @@
+{
+  "name": "skills",
+  "version": "0.3.0",
+  "description": "A collection of Claude skills by Juan Lago.",
+  "author": {
+    "name": "Juan Lago"
+  },
+  "repository": "https://github.com/juanparati/skills",
+  "license": "MIT"
+}
